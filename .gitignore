@@ -1,0 +1,3 @@
+# backend rules
+sensor-aggregator/node_modules/
+sensor-aggregator/.env
