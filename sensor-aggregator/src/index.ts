@@ -35,7 +35,7 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'sensor-temperature-aggregator' });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8082;
 
 async function startServer() {
   await initDatabase();

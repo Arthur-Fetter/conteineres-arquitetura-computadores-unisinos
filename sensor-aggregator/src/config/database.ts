@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 // dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
 const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
+  host: process.env.DB_HOST || 'yb-tservers.yb-demo.svc.cluster.local',
   port: parseInt(process.env.DB_PORT || '5433'),
   database: process.env.DB_NAME || 'yugabyte',
   user: process.env.DB_USER || 'yugabyte',

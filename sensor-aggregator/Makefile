@@ -38,12 +38,13 @@ uninstall-kube-prometheus-stack:
 	helm uninstall prometheus-stack -n monitoring
 	kubectl delete namespace monitoring
 
-# ab testing not yet working
-# ab-local:
-# 	kubectl run ab --image=jordi/ab -it --rm --restart=Never -- sh
-# 	ab -n 100 -c 10 http://sensor-aggregator:8082/
+# ab testing locally requires that you port-forward the sensor-aggregator service to port 8082 from your local cluster. As these tests are only meant to run locally, it doesn't make sense to create secrets and pods in the cluster just to perform this task
+# please run `kubectl port-forward svc/sensor-aggregator 8082:8082`
+ab-local:
+	docker run -v `pwd`:`pwd` -w `pwd` -it --net=host apache-bench-container -k -c 10 -n 10000 -T application/json -v 4 -p ab/post.json http://host.docker.internal:8082/temperature/
 
 deploy-k8s-locally: build-docker-image init-minikube spinup-yugabyte-local deploy-sensor-aggregator-local deploy-kube-prometheus-stack
 
 spindown-k8s-locally: uninstall-kube-prometheus-stack spindown-sensor-aggregator-local spindown-yugabyte-local 
 	minikube delete
+
